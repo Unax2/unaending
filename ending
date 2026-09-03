@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어 어미 가이드 (語尾ガイド)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1a17;
+    --paper:#efe7d6;
+    --paper-deep:#e2d5b8;
+    --paper-line:#c9b98f;
+    --indigo:#2b4562;
+    --hanko:#a7382c;
+    --gold:#9c7a2e;
+    --ink-soft:#4a453d;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(0,0,0,0.03), transparent 60%),
+      radial-gradient(ellipse at 90% 90%, rgba(0,0,0,0.04), transparent 55%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.015) 0px, transparent 1px, transparent 3px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0px, transparent 1px, transparent 4px);
+  }
+  .stage{position:relative; z-index:1; min-height:100vh;}
+  .view{display:none; animation:fadeIn .5s ease;}
+  .view.active{display:block;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  .jp{font-family:'Shippori Mincho', serif;}
+  a{color:inherit; text-decoration:none;}
+  ruby{ruby-align:center;}
+  rt{font-size:.55em; font-weight:400; color:var(--ink-soft); font-family:'Noto Sans KR', sans-serif;}
+
+  /* ---- home ---- */
+  .home-wrap{max-width:1040px; margin:0 auto; padding:64px 28px 100px;}
+  .home-head{text-align:center; margin-bottom:56px;}
+  .eyebrow{font-family:'Zen Kurenaido', sans-serif; letter-spacing:.35em; font-size:12px; color:var(--ink-soft); text-transform:uppercase;}
+  .home-title{font-family:'Shippori Mincho', serif; font-weight:800; font-size:clamp(34px,6vw,58px); margin:14px 0 6px; letter-spacing:.04em;}
+  .home-sub{color:var(--ink-soft); font-size:15px; font-weight:300; margin-top:10px;}
+  .brush-divider{width:220px; height:14px; margin:26px auto 0; opacity:.75;}
+
+  .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:20px;}
+  @media (max-width:820px){ .card-grid{grid-template-columns:1fr;} }
+  .scroll-card{
+    position:relative;
+    background:linear-gradient(180deg, #f6f0e2, #e9ddc2);
+    border:1px solid var(--paper-line); border-radius:4px;
+    padding:38px 26px 30px; min-height:260px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    cursor:pointer;
+    transition:transform .35s cubic-bezier(.2,.7,.3,1), box-shadow .35s ease, border-color .35s ease;
+  }
+  .scroll-card::before, .scroll-card::after{
+    content:""; position:absolute; left:10px; right:10px; height:10px;
+    background:repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 6px); opacity:.15;
+  }
+  .scroll-card::before{top:8px;} .scroll-card::after{bottom:8px;}
+  .scroll-card:hover{transform:translateY(-8px); box-shadow:0 20px 34px -18px rgba(28,26,23,0.45);}
+  .scroll-card[data-cat="verb"]:hover{border-color:var(--indigo);}
+  .scroll-card[data-cat="iadj"]:hover{border-color:var(--hanko);}
+  .scroll-card[data-cat="naadj"]:hover{border-color:var(--gold);}
+  .hanko{
+    width:70px; height:70px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+    font-family:'Shippori Mincho', serif; font-weight:800; font-size:28px; color:#f4ead2;
+    margin-bottom:18px; transform:rotate(-2deg);
+    box-shadow:inset 0 0 0 1.5px rgba(244,234,210,0.5);
+  }
+  .hanko.indigo{background:var(--indigo);} .hanko.hanko-red{background:var(--hanko);} .hanko.gold{background:var(--gold);}
+  .card-kana{font-size:13px; letter-spacing:.2em; color:var(--ink-soft); margin-bottom:6px;}
+  .card-title{font-family:'Shippori Mincho', serif; font-weight:700; font-size:24px; margin:0 0 10px;}
+  .card-desc{font-size:13.5px; line-height:1.7; color:var(--ink-soft); font-weight:300;}
+  .card-enter{margin-top:20px; font-size:12px; letter-spacing:.15em; display:flex; align-items:center; gap:6px; font-weight:500;}
+  .card-enter svg{width:14px; height:14px; transition:transform .3s ease;}
+  .scroll-card:hover .card-enter svg{transform:translateX(4px);}
+  .home-foot{margin-top:60px; text-align:center; font-size:12px; color:var(--ink-soft); letter-spacing:.08em;}
+
+  /* ---- detail ---- */
+  .detail-wrap{max-width:920px; margin:0 auto; padding:0 26px 120px;}
+  .back-link{display:inline-flex; align-items:center; gap:8px; font-size:13px; letter-spacing:.08em; color:var(--ink-soft); padding:22px 0 0; cursor:pointer;}
+  .back-link svg{width:14px;height:14px;}
+  .back-link:hover{color:var(--ink);}
+  .detail-hero{padding:36px 0 30px;}
+  .detail-eyebrow{font-family:'Zen Kurenaido',sans-serif; letter-spacing:.3em; font-size:12px;}
+  .detail-title{font-family:'Shippori Mincho', serif; font-weight:800; font-size:clamp(28px,5vw,42px); margin:10px 0 14px;}
+  .detail-lead{font-size:14px; line-height:1.85; color:var(--ink-soft); font-weight:300; max-width:660px;}
+  .theme-verb .detail-eyebrow, .theme-verb .accent{color:var(--indigo);}
+  .theme-iadj .detail-eyebrow, .theme-iadj .accent{color:var(--hanko);}
+  .theme-naadj .detail-eyebrow, .theme-naadj .accent{color:var(--gold);}
+
+  .stem-box{
+    border:1px solid var(--paper-line); border-radius:6px; background:rgba(255,255,255,.35);
+    padding:20px 24px; margin:26px 0 8px;
+  }
+  .stem-box .stem-label{font-family:'Shippori Mincho',serif; font-weight:700; font-size:16px; margin-bottom:8px; display:block;}
+  .stem-box p{font-size:13.5px; line-height:1.8; color:var(--ink-soft); font-weight:300; margin:6px 0;}
+  .rule-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-top:12px;}
+  .rule-chip{
+    border:1px solid var(--paper-line); border-radius:4px; padding:10px 12px; background:rgba(255,255,255,.5);
+  }
+  .rule-chip .chip-head{font-family:'Shippori Mincho',serif; font-weight:700; font-size:13.5px; margin-bottom:4px;}
+  .rule-chip .chip-body{font-size:12px; color:var(--ink-soft); line-height:1.6;}
+  .rule-chip .chip-convert{
+    font-family:'Shippori Mincho',serif; font-weight:800; font-size:20px;
+    color:var(--ink); margin:8px 0 6px; letter-spacing:.02em;
+  }
+  .rule-chip .chip-convert .accent{font-size:inherit;}
+
+  .section-block{margin-top:46px;}
+  .section-num{font-family:'Shippori Mincho', serif; font-size:13px; letter-spacing:.15em; color:var(--ink-soft); margin-bottom:8px; display:block;}
+  .section-title{font-family:'Shippori Mincho', serif; font-weight:700; font-size:22px; margin:0 0 10px;}
+  .section-body{font-size:13.5px; line-height:1.85; color:var(--ink-soft); font-weight:300; margin-bottom:14px;}
+
+  table.end-table{width:100%; border-collapse:collapse; margin-top:10px; font-size:13.3px;}
+  table.end-table th, table.end-table td{border-bottom:1px solid var(--paper-line); padding:10px 10px; text-align:left; vertical-align:top;}
+  table.end-table th{font-weight:600; color:var(--ink-soft); font-size:11.5px; letter-spacing:.05em; border-bottom:2px solid var(--ink);}
+  td.end-jp{font-family:'Shippori Mincho',serif; font-weight:700; font-size:15px; white-space:nowrap;}
+  td.end-mean{color:var(--ink); font-weight:500;}
+  td.end-ex{font-size:12.3px; color:var(--ink-soft);}
+  table.end-table tr:hover td{background:rgba(0,0,0,0.025);}
+
+  .divider{height:1px; margin:44px 0; background:linear-gradient(90deg, transparent, var(--paper-line) 20%, var(--paper-line) 80%, transparent);}
+  .note-box{border-left:3px solid var(--ink); padding:12px 16px; margin-top:22px; background:rgba(0,0,0,0.025); font-size:12.8px; line-height:1.8; color:var(--ink-soft); font-weight:300;}
+  .note-box b{color:var(--ink);}
+  ::selection{background:var(--ink); color:var(--paper);}
+  @media (max-width:600px){ table.end-table{font-size:12.3px;} }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ============ HOME ============ -->
+  <section id="view-home" class="view active">
+    <div class="home-wrap">
+      <div class="home-head">
+        <div class="eyebrow">JAPANESE ENDING GUIDE</div>
+        <h1 class="home-title jp">語尾ガイド</h1>
+        <div class="home-sub">일본어 어미 가이드 — ます, ました, ません 같은 어미가 어떤 뜻이고 어디에 붙는지</div>
+        <svg class="brush-divider" viewBox="0 0 220 14" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 8 C 40 2, 80 12, 120 6 S 190 2, 216 8" stroke="#1c1a17" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="card-grid">
+        <div class="scroll-card" data-cat="verb" onclick="goTo('verb')">
+          <div class="hanko indigo">動</div>
+          <div class="card-kana">どうし</div>
+          <h2 class="card-title">동사 어미</h2>
+          <p class="card-desc">ます형 어미(ます・たい・ながら)와<br>て형 어미(ている・てもいい)를 구분 설명</p>
+          <div class="card-enter">자세히 보기
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <div class="scroll-card" data-cat="iadj" onclick="goTo('iadj')">
+          <div class="hanko hanko-red">い</div>
+          <div class="card-kana">けいようし</div>
+          <h2 class="card-title">い형용사 어미</h2>
+          <p class="card-desc">어간(い 탈락)에 붙는<br>くない・かった・そう 등 정리</p>
+          <div class="card-enter">자세히 보기
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <div class="scroll-card" data-cat="naadj" onclick="goTo('naadj')">
+          <div class="hanko gold">な</div>
+          <div class="card-kana">けいようどうし</div>
+          <h2 class="card-title">な형용사 어미</h2>
+          <p class="card-desc">어간에 명사처럼 붙는<br>だ・じゃない・なら 등 정리</p>
+          <div class="card-enter">자세히 보기
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="home-foot">각 카드를 클릭하면 어미별 상세 설명으로 이동합니다</div>
+    </div>
+  </section>
+
+  <!-- ============ VERB ENDINGS ============ -->
+  <section id="view-verb" class="view theme-verb">
+    <div class="detail-wrap">
+      <div class="back-link" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        메인으로
+      </div>
+      <div class="detail-hero">
+        <div class="detail-eyebrow">動詞の語尾</div>
+        <h1 class="detail-title jp">동사 어미</h1>
+        <p class="detail-lead">동사에 붙는 어미는 <b class="accent">어떤 형태(ます형 또는 て형)</b>에 붙느냐로 크게 두 종류로 나뉩니다. 먼저 어간을 어느 형태로 바꿔야 하는지부터 확인하세요.</p>
+      </div>
+
+      <!-- ===== ます형 어미 ===== -->
+      <div class="section-block">
+        <span class="section-num accent">01 — ます형(연용형) 어미</span>
+        <h2 class="section-title">어간을 ます형으로 바꾸기</h2>
+        <p class="section-body">아래 어미들은 동사를 <b>ます형 어간</b>(ます를 뗀 형태)으로 바꾼 뒤 붙입니다. 그룹별 변환 규칙은 다음과 같습니다.</p>
+
+        <div class="stem-box">
+          <span class="stem-label">그룹별 ます형 어간 만들기</span>
+          <div class="rule-grid">
+            <div class="rule-chip">
+              <div class="chip-head">1그룹(5단동사)</div>
+              <div class="chip-body">어미 う단 → い단으로 교체<br><ruby>書<rt>か</rt></ruby>く(쓰다) → <ruby>書<rt>か</rt></ruby>き<br><ruby>話<rt>はな</rt></ruby>す(말하다) → <ruby>話<rt>はな</rt></ruby>し<br><ruby>読<rt>よ</rt></ruby>む(읽다) → <ruby>読<rt>よ</rt></ruby>み</div>
+            </div>
+            <div class="rule-chip">
+              <div class="chip-head">2그룹(1단동사)</div>
+              <div class="chip-body">어미 る를 그대로 탈락<br><ruby>食<rt>た</rt></ruby>べる(먹다) → <ruby>食<rt>た</rt></ruby>べ<br><ruby>見<rt>み</rt></ruby>る(보다) → <ruby>見<rt>み</rt></ruby></div>
+            </div>
+            <div class="rule-chip">
+              <div class="chip-head">불규칙동사</div>
+              <div class="chip-body">する(하다) → し<br><ruby>来<rt>く</rt></ruby>る(오다) → <ruby>来<rt>き</rt></ruby></div>
+            </div>
+          </div>
+          <p style="margin-top:12px;">※ 1그룹은 어미가 く・ぐ・す・つ・ぬ・ぶ・む・う・る 무엇이든 <b>う단→い단</b>이라는 같은 규칙 하나로 통일됩니다. (반면 아래 て형은 어미별로 규칙이 갈립니다 — 02 참고)</p>
+        </div>
+
+        <table class="end-table">
+          <tr><th>어미</th><th>의미</th><th>결합 예시 (書く)</th></tr>
+          <tr><td class="end-jp">〜ます</td><td class="end-mean">정중형, 현재/미래 긍정 "~합니다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + ます → <ruby>書<rt>か</rt></ruby>きます（씁니다）</td></tr>
+          <tr><td class="end-jp">〜ません</td><td class="end-mean">정중형, 현재/미래 부정 "~하지 않습니다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + ません → <ruby>書<rt>か</rt></ruby>きません（쓰지 않습니다）</td></tr>
+          <tr><td class="end-jp">〜ました</td><td class="end-mean">정중형, 과거 긍정 "~했습니다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + ました → <ruby>書<rt>か</rt></ruby>きました（썼습니다）</td></tr>
+          <tr><td class="end-jp">〜ませんでした</td><td class="end-mean">정중형, 과거 부정 "~하지 않았습니다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + ませんでした → <ruby>書<rt>か</rt></ruby>きませんでした（쓰지 않았습니다）</td></tr>
+          <tr><td class="end-jp">〜たい</td><td class="end-mean">희망(1인칭) "~하고 싶다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + たい → <ruby>書<rt>か</rt></ruby>きたい（쓰고 싶다）</td></tr>
+          <tr><td class="end-jp">〜たがる</td><td class="end-mean">희망(제3자) "~하고 싶어하다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + たがる → <ruby>書<rt>か</rt></ruby>きたがる（쓰고 싶어하다）</td></tr>
+          <tr><td class="end-jp">〜ながら</td><td class="end-mean">동시동작 "~하면서"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + ながら → <ruby>書<rt>か</rt></ruby>きながら（쓰면서）</td></tr>
+          <tr><td class="end-jp">〜やすい</td><td class="end-mean">"~하기 쉽다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + やすい → <ruby>書<rt>か</rt></ruby>きやすい（쓰기 쉽다）</td></tr>
+          <tr><td class="end-jp">〜にくい</td><td class="end-mean">"~하기 어렵다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + にくい → <ruby>書<rt>か</rt></ruby>きにくい（쓰기 어렵다）</td></tr>
+          <tr><td class="end-jp">〜そう</td><td class="end-mean">양태(직접 관찰) "~일 것 같다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>き + そう → <ruby>書<rt>か</rt></ruby>きそう（쓸 것 같다）</td></tr>
+        </table>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- ===== て형 어미 ===== -->
+      <div class="section-block">
+        <span class="section-num accent">02 — て형(연결형) 어미</span>
+        <h2 class="section-title">어간을 て형으로 바꾸기</h2>
+        <p class="section-body">아래 어미들은 동사를 <b>て형</b>으로 바꾼 뒤 붙입니다. て형은 그룹뿐 아니라 <b>1그룹 안에서도 어미 글자에 따라 소리가 달라지는 음편(音便)</b>이 있어 주의가 필요합니다.</p>
+
+        <div class="stem-box">
+          <span class="stem-label">그룹·어미별 て형 만들기</span>
+          <div class="rule-grid">
+            <div class="rule-chip">
+              <div class="chip-head">1그룹 동사 어미 く</div>
+              <div class="chip-convert accent">く → いて</div>
+              <div class="chip-body"><ruby>書<rt>か</rt></ruby>く(쓰다) → <ruby>書<rt>か</rt></ruby>いて(써서/쓰고)<br><ruby>聞<rt>き</rt></ruby>く(듣다) → <ruby>聞<rt>き</rt></ruby>いて(들어서/듣고)<br><span style="opacity:.7;">(예외: 行く(가다)→行って(가서/가고))</span></div>
+            </div>
+            <div class="rule-chip">
+              <div class="chip-head">1그룹 동사 어미 ぐ</div>
+              <div class="chip-convert accent">ぐ → いで</div>
+              <div class="chip-body"><ruby>泳<rt>およ</rt></ruby>ぐ(수영하다) → <ruby>泳<rt>およ</rt></ruby>いで(수영해서/수영하고)<br><ruby>脱<rt>ぬ</rt></ruby>ぐ(벗다) → <ruby>脱<rt>ぬ</rt></ruby>いで(벗어서/벗고)</div>
+            </div>
+            <div class="rule-chip">
+              <div class="chip-head">1그룹 동사 어미 ぬ・ぶ・む</div>
+              <div class="chip-convert accent">ぬ・ぶ・む → んで</div>
+              <div class="chip-body"><ruby>死<rt>し</rt></ruby>ぬ(죽다) → <ruby>死<rt>し</rt></ruby>んで(죽어서/죽고)<br><ruby>遊<rt>あそ</rt></ruby>ぶ(놀다) → <ruby>遊<rt>あそ</rt></ruby>んで(놀아서/놀고)<br><ruby>読<rt>よ</rt></ruby>む(읽다) → <ruby>読<rt>よ</rt></ruby>んで(읽어서/읽고)</div>
+            </div>
+            <div class="rule-chip">
+              <div class="chip-head">1그룹 동사 어미 う・つ・る</div>
+              <div class="chip-convert accent">う・つ・る → って</div>
+              <div class="chip-body"><ruby>買<rt>か</rt></ruby>う(사다) → <ruby>買<rt>か</rt></ruby>って(사서/사고)<br><ruby>待<rt>ま</rt></ruby>つ(기다리다) → <ruby>待<rt>ま</rt></ruby>って(기다려서/기다리고)<br><ruby>乗<rt>の</rt></ruby>る(타다) → <ruby>乗<rt>の</rt></ruby>って(타서/타고)</div>
+            </div>
+            <div class="rule-chip">
+              <div class="chip-head">1그룹 동사 어미 す</div>
+              <div class="chip-convert accent">す → して</div>
+              <div class="chip-body"><ruby>話<rt>はな</rt></ruby>す(말하다) → <ruby>話<rt>はな</rt></ruby>して(말해서/말하고), <ruby>貸<rt>か</rt></ruby>す(빌려주다) → <ruby>貸<rt>か</rt></ruby>して(빌려줘서/빌려주고)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stem-box">
+          <span class="stem-label">2그룹 / 불규칙동사 て형</span>
+          <div class="rule-grid">
+            <div class="rule-chip">
+              <div class="chip-head">2그룹 동사</div>
+              <div class="chip-convert accent">る 탈락 + て</div>
+              <div class="chip-body"><ruby>食<rt>た</rt></ruby>べる(먹다) → <ruby>食<rt>た</rt></ruby>べて(먹어서/먹고)<br><ruby>見<rt>み</rt></ruby>る(보다) → <ruby>見<rt>み</rt></ruby>て(봐서/보고)</div>
+            </div>
+            <div class="rule-chip">
+              <div class="chip-head">불규칙동사</div>
+              <div class="chip-convert accent">して / <ruby>来<rt>き</rt></ruby>て</div>
+              <div class="chip-body">する(하다) → して(해서/하고)<br><ruby>来<rt>く</rt></ruby>る(오다) → <ruby>来<rt>き</rt></ruby>て(와서/오고)</div>
+            </div>
+          </div>
+        </div>
+
+        <table class="end-table">
+          <tr><th>어미</th><th>의미</th><th>결합 예시 (書く)</th></tr>
+          <tr><td class="end-jp">〜ている</td><td class="end-mean">진행 "~하고 있다" / 상태 "~해 있다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>いて + いる → <ruby>書<rt>か</rt></ruby>いている（쓰고 있다）</td></tr>
+          <tr><td class="end-jp">〜てもいい</td><td class="end-mean">허가 "~해도 된다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>いて + もいい → <ruby>書<rt>か</rt></ruby>いてもいい（써도 된다）</td></tr>
+          <tr><td class="end-jp">〜てはいけない</td><td class="end-mean">금지 "~하면 안 된다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>いて + はいけない → <ruby>書<rt>か</rt></ruby>いてはいけない（쓰면 안 된다）</td></tr>
+          <tr><td class="end-jp">〜てから</td><td class="end-mean">순서 "~하고 나서"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>いて + から → <ruby>書<rt>か</rt></ruby>いてから（쓰고 나서）</td></tr>
+          <tr><td class="end-jp">〜てみる</td><td class="end-mean">시도 "~해 보다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>いて + みる → <ruby>書<rt>か</rt></ruby>いてみる（써 보다）</td></tr>
+          <tr><td class="end-jp">〜てください</td><td class="end-mean">요청 "~해 주세요"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>いて + ください → <ruby>書<rt>か</rt></ruby>いてください（써 주세요）</td></tr>
+          <tr><td class="end-jp">〜てしまう</td><td class="end-mean">완료·아쉬움 "~해 버리다"</td><td class="end-ex"><ruby>書<rt>か</rt></ruby>いて + しまう → <ruby>書<rt>か</rt></ruby>いてしまう（써 버리다）</td></tr>
+        </table>
+
+        <div class="note-box">
+          <b>구분 포인트.</b> ます형 어미는 정중함·희망·동시동작처럼 <b>문장을 끝맺거나 명사처럼 연결</b>하는 어미가 많고, て형 어미는 진행·허가·금지처럼 <b>다른 동사(いる, みる, しまう 등)와 이어 붙는</b> 복합 표현이 많습니다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ I-ADJ ENDINGS ============ -->
+  <section id="view-iadj" class="view theme-iadj">
+    <div class="detail-wrap">
+      <div class="back-link" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        메인으로
+      </div>
+      <div class="detail-hero">
+        <div class="detail-eyebrow">い形容詞の語尾</div>
+        <h1 class="detail-title jp">い형용사 어미</h1>
+        <p class="detail-lead">い형용사는 어미 「い」를 뗀 <b class="accent">어간</b>에 대부분의 어미가 붙습니다. です만 예외적으로 어간이 아니라 기본형 그대로에 붙습니다.</p>
+      </div>
+
+      <div class="section-block">
+        <span class="section-num accent">01 — 어간 만들기</span>
+        <h2 class="section-title">어미 「い」 탈락</h2>
+        <div class="stem-box">
+          <span class="stem-label">어간 만드는 법</span>
+          <p>기본형에서 마지막 글자 い를 떼면 어간입니다.<br>
+          예) <ruby>高<rt>たか</rt></ruby>い(비싸다) → 어간 <ruby>高<rt>たか</rt></ruby> / <ruby>寒<rt>さむ</rt></ruby>い(춥다) → 어간 <ruby>寒<rt>さむ</rt></ruby></p>
+        </div>
+
+        <table class="end-table">
+          <tr><th>어미</th><th>의미</th><th>결합 예시 (高い)</th></tr>
+          <tr><td class="end-jp">〜です</td><td class="end-mean">정중형 "~ㅂ니다" <span style="opacity:.7;">(예외: 기본형 그대로 + です)</span></td><td class="end-ex"><ruby>高<rt>たか</rt></ruby>い + です → <ruby>高<rt>たか</rt></ruby>いです（비쌉니다）</td></tr>
+          <tr><td class="end-jp">〜くない</td><td class="end-mean">부정 "~하지 않다"</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + くない → <ruby>高<rt>たか</rt></ruby>くない（비싸지 않다）</td></tr>
+          <tr><td class="end-jp">〜くありません</td><td class="end-mean">정중 부정 "~하지 않습니다"</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + くありません → <ruby>高<rt>たか</rt></ruby>くありません（비싸지 않습니다）</td></tr>
+          <tr><td class="end-jp">〜かった</td><td class="end-mean">과거 "~했다"</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + かった → <ruby>高<rt>たか</rt></ruby>かった（비쌌다）</td></tr>
+          <tr><td class="end-jp">〜くなかった</td><td class="end-mean">과거 부정 "~하지 않았다"</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + くなかった → <ruby>高<rt>たか</rt></ruby>くなかった（비싸지 않았다）</td></tr>
+          <tr><td class="end-jp">〜くて</td><td class="end-mean">연결형 "~하고/~해서"</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + くて → <ruby>高<rt>たか</rt></ruby>くて（비싸고/비싸서）</td></tr>
+          <tr><td class="end-jp">〜く</td><td class="end-mean">부사형 "~하게" (뒤에 동사 수식)</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + く → <ruby>高<rt>たか</rt></ruby>く<ruby>な<rt></rt></ruby>る（비싸게 되다）</td></tr>
+          <tr><td class="end-jp">〜ければ</td><td class="end-mean">가정 "~하면"</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + ければ → <ruby>高<rt>たか</rt></ruby>ければ（비싸면）</td></tr>
+          <tr><td class="end-jp">〜そう</td><td class="end-mean">양태 "~해 보인다"</td><td class="end-ex"><ruby>高<rt>たか</rt></ruby> + そう → <ruby>高<rt>たか</rt></ruby>そう（비싸 보인다）</td></tr>
+        </table>
+        <div class="note-box">
+          <b>예외.</b> いい(좋다)는 어간 자체가 良(よ)로 바뀐 뒤 어미가 붙습니다 — 良くない, 良かった, 良さそう. 「いい」 그대로는 기본형·정중형에서만 씁니다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NA-ADJ ENDINGS ============ -->
+  <section id="view-naadj" class="view theme-naadj">
+    <div class="detail-wrap">
+      <div class="back-link" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        메인으로
+      </div>
+      <div class="detail-hero">
+        <div class="detail-eyebrow">な形容詞の語尾</div>
+        <h1 class="detail-title jp">な형용사 어미</h1>
+        <p class="detail-lead">な형용사는 <b class="accent">어간 그대로(변형 없이)</b> 명사처럼 어미가 붙습니다. だ・です・な・に 등 뒤에 오는 어미가 문법적 역할을 결정합니다.</p>
+      </div>
+
+      <div class="section-block">
+        <span class="section-num accent">01 — 어간 그대로 사용</span>
+        <h2 class="section-title">어간 만들기 (사실상 변형 없음)</h2>
+        <div class="stem-box">
+          <span class="stem-label">어간이란</span>
+          <p>사전에 실리는 형태 자체가 어간입니다. 명사와 똑같은 방식으로 어미가 붙습니다.<br>
+          예) <ruby>静<rt>しず</rt></ruby>か(조용함) → 어간은 <ruby>静<rt>しず</rt></ruby>か 그대로</p>
+        </div>
+
+        <table class="end-table">
+          <tr><th>어미</th><th>의미</th><th>결합 예시 (静か)</th></tr>
+          <tr><td class="end-jp">〜だ</td><td class="end-mean">반말체 "~하다"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + だ → <ruby>静<rt>しず</rt></ruby>かだ（조용하다）</td></tr>
+          <tr><td class="end-jp">〜です</td><td class="end-mean">정중형 "~합니다"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + です → <ruby>静<rt>しず</rt></ruby>かです（조용합니다）</td></tr>
+          <tr><td class="end-jp">〜じゃない / ではない</td><td class="end-mean">부정 "~하지 않다"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + じゃない → <ruby>静<rt>しず</rt></ruby>かじゃない（조용하지 않다）</td></tr>
+          <tr><td class="end-jp">〜だった</td><td class="end-mean">과거 "~했다"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + だった → <ruby>静<rt>しず</rt></ruby>かだった（조용했다）</td></tr>
+          <tr><td class="end-jp">〜でした</td><td class="end-mean">과거 정중 "~했습니다"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + でした → <ruby>静<rt>しず</rt></ruby>かでした（조용했습니다）</td></tr>
+          <tr><td class="end-jp">〜じゃなかった / ではなかった</td><td class="end-mean">과거 부정 "~하지 않았다"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + じゃなかった → <ruby>静<rt>しず</rt></ruby>かじゃなかった（조용하지 않았다）</td></tr>
+          <tr><td class="end-jp">〜で</td><td class="end-mean">연결형 "~하고/~해서"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + で → <ruby>静<rt>しず</rt></ruby>かで（조용하고/조용해서）</td></tr>
+          <tr><td class="end-jp">〜に</td><td class="end-mean">부사형 "~하게" (뒤에 동사 수식)</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + に → <ruby>静<rt>しず</rt></ruby>かに<ruby>な<rt></rt></ruby>る（조용해지다）</td></tr>
+          <tr><td class="end-jp">〜な</td><td class="end-mean">명사 수식형 "~한"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + な → <ruby>静<rt>しず</rt></ruby>かな<ruby>部屋<rt>へや</rt></ruby>（조용한 방）</td></tr>
+          <tr><td class="end-jp">〜なら(ば)</td><td class="end-mean">가정 "~라면"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + なら → <ruby>静<rt>しず</rt></ruby>かなら（조용하면）</td></tr>
+          <tr><td class="end-jp">〜そう</td><td class="end-mean">양태 "~해 보인다"</td><td class="end-ex"><ruby>静<rt>しず</rt></ruby>か + そう → <ruby>静<rt>しず</rt></ruby>かそう（조용해 보인다）</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function goTo(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const target = document.getElementById('view-' + name);
+    if(target){ target.classList.add('active'); }
+    window.scrollTo({top:0, behavior:'smooth'});
+    history.replaceState(null, '', '#' + name);
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = location.hash.replace('#','');
+    if(['verb','iadj','naadj'].includes(hash)){ goTo(hash); }
+  });
+</script>
+</body>
+</html>
